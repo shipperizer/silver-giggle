@@ -11,3 +11,8 @@ logger.setLevel(logging.INFO)
 @task(queue='silver_giggle.consumer')
 def log(message):
     logger.info('Received {}'.format(message))
+
+
+@task(queue='silver_giggle.consumer')
+def fake_log(message):
+    logger.info('Received {}'.format(message))
