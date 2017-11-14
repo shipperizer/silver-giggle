@@ -100,4 +100,4 @@ services:
       - RABBITMQ_DEFAULT_USER=rabbit
       - RABBITMQ_DEFAULT_PASS=rabbit
     ports:
-      - 15672
+      - 32000:15672
