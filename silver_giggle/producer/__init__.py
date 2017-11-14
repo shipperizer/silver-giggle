@@ -19,28 +19,29 @@ def init_producer():
     )
 
     app.conf.task_routes = {
-        'silver_giggle.producer.tasks.log': 'silver_giggle.producer',
+        'silver_giggle.producer.tasks.log': app.main,
+        'silver_giggle.producer.tasks.fake': app.main,
         'silver_giggle.consumer.tasks.log': {
             'exchange': 'silver_giggle.producer.broadcast',
             'routing_key': 'msg'
         },
-        'silver_giggle.consumer.tasks.fake_log': {
+        'silver_giggle.consumer.tasks.fake': {
             'exchange': 'silver_giggle.producer.broadcast',
-            'routing_key': 'fake.msg'
+            'routing_key': 'fake'
         }
     }
 
     app.conf.beat_schedule = {
+        'fake': {
+            'task': 'silver_giggle.producer.tasks.fake',
+            'schedule': timedelta(seconds=15),
+            'kwargs': {'chars': 10},
+        },
         'log': {
             'task': 'silver_giggle.producer.tasks.log',
-            'schedule': timedelta(seconds=1),
-            'args': (30,),
+            'schedule': timedelta(seconds=10),
+            'kwargs': {'chars': 30},
         },
-        'fake_log': {
-            'task': 'silver_giggle.producer.tasks.fake_log',
-            'schedule': timedelta(seconds=1),
-            'args': (10,),
-        }
     }
 
     return app
