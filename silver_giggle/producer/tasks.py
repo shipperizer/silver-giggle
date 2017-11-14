@@ -19,10 +19,10 @@ def log(self, chars=1):
 
 
 @task(bind=True)
-def fake_log(self, chars=1):
+def fake(self, chars=1):
     message = ''.join(choices(string.ascii_uppercase + string.digits, k=chars))
-    logger.warning('Sending {} for silver_giggle.consumer.tasks.fake.log'.format(message))
-    self.app.send_task('silver_giggle.consumer.tasks.fake_log', args=(message,))
+    logger.warning('Sending {} for silver_giggle.consumer.tasks.fake'.format(message))
+    self.app.send_task('silver_giggle.consumer.tasks.fake', args=(message,))
 
 
 @task_success.connect
